@@ -144,7 +144,7 @@ Packer needs to unmount what it had mounted originally
 <!-- .slide: data-background="#6C1D5F" -->
 # Conclusion
 
-Able to apply filesystems/paritions automatically, no reboots.
+Now able to apply filesystems/paritions changes automatically without any reboots.
 
 **Caveats**:
 
@@ -157,5 +157,9 @@ Able to apply filesystems/paritions automatically, no reboots.
 
 !SLIDE
 <!-- .slide: data-background="#6C1D5F" -->
-<center>![HashiConf](img/hashiconf.png)</center>
+<center>![HashiConf](img/hashiconf.png)
+Come by the Xebia stand for some Q/A
+<p>
 Win a GoPro by participating in the HashiContest at the Xebia booth
+
+</center>
