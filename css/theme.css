@@ -1,0 +1,211 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/montserrat-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('../fonts/robotoslab-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Hack';
+  src: url('../fonts/hack-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*
+Global styles
+*/
+body {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: #333333;
+  background: #FFFFFF;
+}
+
+.reveal {}
+::selection {}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides > section, .reveal .slides > section > section {}
+
+/*
+Headers
+*/
+*
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  margin: 0 0 16px 0;
+  color: #6C1D5F;
+  font-family: Montserrat;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  text-shadow: none;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.reveal section[data-background="#6C1D5F"], .reveal section[data-background="#6C1D5F"] h1 {
+  color: #EFEFEF;
+}
+
+.reveal section[data-background="#6C1D5F"] b, .reveal section[data-background="#6C1D5F"] strong {
+  color: #EFEFEF;
+}
+
+.reveal h1 {
+  font-size: 2em;
+}
+
+.reveal h2 {
+  font-size: 1.6em;
+}
+
+.reveal h3 {
+  font-size: 1.3em;
+}
+
+.reveal h4 {
+  font-size: 1.0em;
+}
+
+/*
+Other
+*/
+.reveal p {
+  margin: 16px 0;
+  line-height: 1.3;
+}
+
+.reveal img, .reveal video, .reveal iframe {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.reveal strong, .reveal b {
+  font-weight: bold;
+  color: #544E5F;
+}
+
+.reveal em, .reveal i {
+  font-style: italic;
+}
+
+.reveal dl, .reveal ol, .reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+.reveal ol {
+  list-style-type: decimal;
+}
+
+.reveal ul {
+  list-style-type: disc;
+}
+.reveal ul ul {
+  list-style-type: circle;
+}
+.reveal ul ul ul {
+  list-style-type: square;
+}
+
+.reveal ul ul, .reveal ul ol, .reveal ol ol, .reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+
+.reveal li {
+  margin: 10px 0;
+}
+
+.reveal dt {}
+.reveal dd {}
+
+.reveal blockquote {}
+.reveal q {}
+
+.reveal pre {
+  display: block;
+  margin: 30px auto;
+  text-align: left;
+  font-size: 0.6em;
+  font-family: "Hack", monospace;
+  color: #999;
+  line-height: 1.2em;
+  word-wrap: break-word;
+}
+
+.reveal code {}
+
+.reveal table {}
+.reveal table th {}
+  .reveal table tr {}
+.reveal table td {
+  padding: 0 20px 0  0;
+}
+
+.reveal sup {}
+.reveal sub {}
+.reveal small {}
+
+/*
+Links
+*/
+.reveal a {
+  color: #20B2A6;
+  text-decoration: none;
+}
+.reveal a:hover {}
+
+/*
+Images
+*/
+.reveal section img {}
+.reveal section img.plain {}
+.reveal a img {}
+.reveal a:hover img {}
+
+/*
+Navigation controls
+*/
+.reveal .controls .navigate-left, .reveal .controls .navigate-left.enabled, .reveal .controls .navigate-left.enabled:hover {
+  border-right-color: #20B2A6;
+}
+.reveal .controls .navigate-right, .reveal .controls .navigate-right.enabled, .reveal .controls .navigate-right.enabled:hover {
+  border-left-color: #20B2A6;
+}
+.reveal .controls .navigate-up, .reveal .controls .navigate-up.enabled, .reveal .controls .navigate-up.enabled:hover {
+  border-bottom-color: #20B2A6;
+}
+.reveal .controls .navigate-down, .reveal .controls .navigate-down.enabled, .reveal .controls .navigate-down.enabled:hover {
+  border-top-color: #20B2A6;
+}
+
+/*
+Progress bar
+*/
+.reveal .progress {}
+.reveal .progress span {}
+
+/*
+Slide number
+*/
+.reveal .slide-number {}
+.center {}
+.reveal section img {}
+.reveal section img.noblock {}
+.reveal section img.header {}
+.reveal ol, .reveal dl, .reveal ul {}

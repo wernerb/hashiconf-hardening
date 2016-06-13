@@ -1,0 +1,2 @@
+# hashiconf eu - packer presentation
+
