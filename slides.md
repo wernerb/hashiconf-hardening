@@ -57,18 +57,21 @@ Reducing available **vectors of attack** by applying best practices in security 
 * Ensure NTP is active and properly synchronized
 
 !SLIDE
-# You should not be able to...
+# You must
 <!-- .slide: data-background="#6C1D5F" -->
 
 !SUB
-# ..  have execute rights on files in /tmp
+## not have exec rights on /tmp
 
 !SUB
-# .. by default have world readable files
+### not create world readable files
+
+!SUB
+### but by far the most annoying is..
 
 !SLIDE
 <!-- .slide: data-background="#6C1D5F" -->
-# Must have multiple mounts
+# Multiple mounts
 
 * /var
 * /var/log
@@ -79,9 +82,9 @@ Reducing available **vectors of attack** by applying best practices in security 
 !SUB
 # Rationale
 
-Prevents resource exhaustion.
+Prevent resource exhaustion.
 
-Allow (audit) logging to continue while under attack.
+Allow (audit) logging to continue during application error or attack.
 
 !SUB
 # cat /dev/zero > zerofile
@@ -93,19 +96,17 @@ Check and see how fast you can fill up your disk..
 
 * Create multiple virtual filesystems (files) and mount to apply disk quota (RHEL 6)
 * If using XFS, use `xfs_quota` to set quota's per project (folder) (XFS is RHEL 7 default root)
-* **Add LVM Logical Volume Manager** (RHEL 6)
+* **LVM Logical Volume Manager** (RHEL 6)
   * Span a filesystem over multiple block devices
   * Easy resizing
   * Portability
 
 !SLIDE
 <!-- .slide: data-background="#6C1D5F" -->
-# Add LVM to image with Packer
+# Packer: Add LVM to AMI
 
 !SUB
 # Use the `amazon-chroot` provider
-
-Workflow:
 
 1. Creates volume from AMI snapshot
   * No start of machine required
@@ -117,15 +118,15 @@ Workflow:
 5. Unmounts all `chroot_mounts` and detaches volume
 
 !SUB
-# Challenges
+## Challenge
 
-1. Packer wants to always unmount the everything it mounted at the beginning
-2. No way to access {{ .Device }} in provisioner (/dev/xvda1)
+Packer needs to unmount what it had mounted originally
+<!-- 2. No way to access {{ .Device }} in provisioner (/dev/xvda1) -->
 
 !SUB
 # Solution
 
-* Use `shell-local` provisioner to execute a script on host: `lvm.sh`
+* Use _shell-local_ provisioner to execute a script on host: _lvm.sh_
   1. Unmount
   2. Backup the device with `tar`
   3. Partition (Boot + LVM)
