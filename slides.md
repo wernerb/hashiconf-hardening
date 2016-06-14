@@ -6,6 +6,8 @@
 <br />
 **OS Hardening with Packer**
 
+by **Werner Buck**
+
 !SLIDE
 <!-- .slide: data-background="#6B205E" -->
 # Structure
@@ -331,10 +333,14 @@ Use **amazon-ebs** and create an AMI hierarchy.
 <!-- .slide: data-background="#6B205E" -->
 <center>![HashiConf](img/hashiconf.png)
 Come by the Xebia stand for some Q/A
+
+If you've missed it, sign up for the [HashiContest.io](hashicontest.io) at the Xebia stand!
 </center>
 
 !SLIDE
-# Additional Mitigations for Resource Exhaustion
+# Mitigations for Resource Exhaustion
+
+Following solves only disk exhaustion, some filesystmes are required to set mountoptions
 
 * Create multiple virtual filesystems (files) and mount to apply disk quota (RHEL 6)
 * If using XFS, use `xfs_quota` to set quota's per project (folder) (XFS is RHEL 7 default root)
