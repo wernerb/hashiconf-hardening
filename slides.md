@@ -6,17 +6,17 @@
 <br />
 **OS Hardening with Packer**
 
-by **Werner Buck**
+**Werner Buck** wbuck@xebia.com
 
-!SLIDE
+<!-- !SLIDE -->
 <!-- .slide: data-background="#6B205E" -->
-# Structure
+<!-- # Structure
 
 * What / Why OS Hardening?
 * Implementation
 * Block Storage Manipulation
 * Auditing
-* Conclusion
+* Conclusion -->
 
 !SLIDE
 # What is OS Hardening
@@ -42,7 +42,7 @@ Think about docker hosts,
 GRSEC, SELinux.
 
 !SLIDE
-# Defaults on most OSs
+# Lets look at some common OS defaults..
 
 Default umask is 002. New files are **World** readable by default!
 
@@ -59,7 +59,7 @@ But what are the best practices?
 
 Stand on the shoulders of giants
 
-Implementation guides **CIS** and **STIG**
+Implementation guides called **CIS** and **STIG**
 
 <img src="img/cis.png"><img src="img/stig.png" width="20%" height="20%">
 
@@ -84,7 +84,7 @@ Docker-bench-security by Diogo Mónica
 * Disable anything you do not specifically use:
   * **xinetd** (services), **avahi** (zeroconf), **dhcp**, **nfs**
 * Ensure NTP is active and properly synchronized
-* Much and much more..
+* Much more..
 
 !SLIDE
 
@@ -119,10 +119,11 @@ CIS Hardened Image Red Hat 5/6/7 AMI and more
 
 Costs **$0.02** an hour.
 
-Maintenance ?
-
 !SLIDE
 But more importantly.. are you in control?
+
+! NOTE
+Maintenance
 
 !SLIDE
 #Execute (insert CMT) on boot?
@@ -135,6 +136,8 @@ But more importantly.. are you in control?
 Ask yourself.. what if this process fails?
 
 Your new machine is half-secure on your production network.
+
+It even started out on your production network as unhardened and non-compliant
 
 !NOTE
 Someone adds cloud-init pre-command to simply "disable" the agent
@@ -165,7 +168,7 @@ Create AMI's that are compliant **on boot**
 <!-- .slide: data-background="#6B205E" -->
 # This just in..
 
-CIS requires **different** filesystems for:
+A CIS requirement is that your systems must have **different** filesystems for:
 
 ```
 /var
@@ -191,7 +194,7 @@ Allow (audit) logging to continue during application error or attack.
 !SLIDE
 # Automating this requirement..
 
-We want to base on the original RHEL AMI.
+We want to use the original RHEL AMI as our source.
 
 We do not want to reboot..
 
@@ -200,16 +203,19 @@ CIS recommends to implement the **Logical Volume Manager** (LVM)
 !SLIDE
 # Packer's amazon-chroot builder
 
+Mounts a new volume based on source AMI **directly** on the packer host
+
 Different from the regular provider as it does **not** require launching a machine.
 
-Mounts a new volume based on source AMI **directly** on the packer host
+!NOTE
+In my experience..
 
 !SLIDE
 # shell-local provisioner
 
-The gambit: use **shell-local** provisioner to apply lvm directly on the device
+Idea: use **shell-local** provisioner to apply lvm directly on the block storage device.
 
-We use _lvm.sh_ to apply filesystem changes.
+We use _lvm.sh_ to handle everything for us.
 
 ```
 ...
@@ -241,14 +247,11 @@ lvcreate -L5G -n lvroot "${vgname}" && /sbin/mkfs.ext4 -m0 -O ^64bit "/dev/${vgn
 ...
 ```
 
-Restore from tar
+Remount and then restore from tar
 
 ```
 tar -xf "${BACKUP_FILE}" --acls --selinux --xattrs
 ```
-
-And remount!
-
 
 !SLIDE
 # Transplant is a success!
@@ -278,7 +281,9 @@ Not only busy, there are **more** mounts and **active** LVM volumes!
 !SLIDE
 # Solution
 
-Unmount ourselves and **mount** fake folders for packer to then **unmount**..
+An additional script!
+
+Deactivate the LVM volumes and mount the **fake** folders for packer solely to have them **unmounted**..
 
 ```
 "provisioners": [
@@ -306,7 +311,7 @@ There is **no compliance** unless it can be **audited**.
 !SLIDE
 # Auditing
 
-Automatically audit CIS/STIG/OVAL profiles with **openscap** and the **oscap** tool.
+Automatically audit CIS/STIG profiles OVAL/XCCDF definition using **openscap** and the **oscap** tool.
 
 Example scanning for vulnerabilities:
 ```
@@ -319,22 +324,43 @@ Example checking for cis compliance:
 $ oscap xccdf eval –profile selected_profile –results-arf arf.xml –report report.html ssg-rhel6-ds.xml
 ```
 
+
 !SLIDE
 # Conclusion
 
-Even hashicorp says "use **amazon-chroot** lightly". Just use it for LVM.
+Even hashicorp says "use **amazon-chroot** lightly".
 
-Use **amazon-ebs** and create an AMI hierarchy.
+In our case. Just use it for LVM. A run roughly takes **25** minutes to complete.
+
+Create an AMI hierarchy and use **amazon-ebs** for the child AMI's
+
+Reasoning:
 
 * EBS encryption!
 * LVM then only needs to be added __once__ per new RHEL image.
+
+!NOTE
+Several minutes are lost due to ansible-local has to be installed.
+
+!SLIDE
+# Should probably create a pull request..
+
+To add an option to the **amazon-chroot** builder such as:
+
+```
+"manage_mounts": false
+```
+
+Any chance it would be accepted Mitchell?
 
 !SLIDE
 <!-- .slide: data-background="#6B205E" -->
 <center>![HashiConf](img/hashiconf.png)
 Come by the Xebia stand for some Q/A
 
-If you've missed it, sign up for the [HashiContest.io](hashicontest.io) at the Xebia stand!
+You can contact me at wbuck@xebia.com
+
+If you've missed it, sign up for the hashicontest.io at the Xebia stand!
 </center>
 
 !SLIDE
