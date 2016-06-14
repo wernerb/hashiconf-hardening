@@ -40,7 +40,7 @@ Think about docker hosts,
 GRSEC, SELinux.
 
 !SLIDE
-# Lets start slow easy..
+# Defaults on most OSs
 
 Default umask is 002. New files are **World** readable by default!
 
@@ -50,7 +50,10 @@ Default umask is 002. New files are **World** readable by default!
 Many simple exploits that are used against machines, (via vulnerable PHP applications or local users, etc), rely upon being able to execute commands in /tmp. If this is a seperate partition or file system you can gain some protection by marking it non-executable. The common problem with this is that apt-get fails to work with such a setup.
 
 !SLIDE
-# Implementation Guides
+But what are the best practices?
+
+!SLIDE
+# Hardening implementation Guides
 
 Stand on the shoulders of giants
 
@@ -75,7 +78,7 @@ Docker-bench-security by Diogo Mónica
 !SLIDE
 #Example CIS benchmark requirements
 * Force GPG checks on all your repositories
-* Removal of packages: rsh-server, telnet-server, xorg-x11-server-common
+* Removal of packages: rsh-server, telnet-server, xorg-x11-server-common ...
 * Disable anything you do not specifically use:
   * **xinetd** (services), **avahi** (zeroconf), **dhcp**, **nfs**
 * Ensure NTP is active and properly synchronized
@@ -102,10 +105,10 @@ Do **not** implement **until** you understand the consequences
 **Non-scored**, but CIS also recommends **disabling IPV6**
 
 !SLIDE
-Again.. we are reducing the **potential attack surface**
+Again.. remember we are reducing the **potential attack surface**
 
 !SLIDE
-# How do we implement the guides?
+How do we implement the guides?
 
 !SLIDE
 #Compliance as a Service?
@@ -121,7 +124,6 @@ But more importantly.. are you in control?
 
 !SLIDE
 #Execute (insert CMT) on boot?
-
 
 1. Install puppet agent
 2. Fetch config
@@ -140,9 +142,9 @@ Someone adds cloud-init pre-command to simply "disable" the agent
 
 !SLIDE
 
-Have packer's **provisioners** harden your image
+Use Packer's **provisioners** to apply hardening
 
-Create bootstrapped AMI's that are compliant **on boot**
+Create AMI's that are compliant **on boot**
 
 !SLIDE
 # Ansible roles!
