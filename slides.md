@@ -1,4 +1,4 @@
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 <center><div style="width: 75%; height: auto;"><img src="img/xebia.svg"/></div></center>
 <br />
 <center>
@@ -7,11 +7,11 @@
 **OS Hardening with Packer**
 
 !SLIDE
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 # OS Hardening
 Reducing available **vectors of attack** by applying best practices in security mitigations on the operating system level.
 
-!SUB
+!SLIDE
 # OS Hardening
 
 * Not the only tool in your warchest (application/network hardening)
@@ -21,7 +21,7 @@ Reducing available **vectors of attack** by applying best practices in security 
   * OVAL (Open Vulnerability and Assessment Language )
   * SCAP (Security Content Automation Protocol)
 
-!SUB
+!SLIDE
 # STIG
 (Security Technical Implementation Guide)
 
@@ -29,7 +29,7 @@ Reducing available **vectors of attack** by applying best practices in security 
   * Machine-readable profiles
     * RHEL 7 STIG - SCAP profile ([github.com/OpenSCAP/scap-security-guide](https://github.com/OpenSCAP/scap-security-guide))
 
-!SUB
+!SLIDE
 # CIS Benchmarks
 (Center of Internet Security)
 * Frequently used to meet FISMA, PCI, HIPAA requirements
@@ -38,16 +38,16 @@ Reducing available **vectors of attack** by applying best practices in security 
   * RHEL 5/6/7
 * Machine readable profiles available through paid membership
 
-!SUB
+!SLIDE
 # Combine rather than choose
 
 * A lot of similarities between CIS and STIG
 
 !SLIDE
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 # CIS RHEL 7
 
-!SUB
+!SLIDE
 # Example Requirements
 
 * GPG must be used for all yum repositories
@@ -58,19 +58,19 @@ Reducing available **vectors of attack** by applying best practices in security 
 
 !SLIDE
 # You must
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 
-!SUB
+!SLIDE
 ## not have exec rights on /tmp
 
-!SUB
+!SLIDE
 ### not create world readable files
 
-!SUB
+!SLIDE
 ### but by far the most annoying is..
 
 !SLIDE
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 # Multiple mounts
 
 * /var
@@ -79,19 +79,19 @@ Reducing available **vectors of attack** by applying best practices in security 
 * /home
 * /tmp
 
-!SUB
+!SLIDE
 # Rationale
 
 Prevent resource exhaustion.
 
 Allow (audit) logging to continue during application error or attack.
 
-!SUB
+!SLIDE
 # cat /dev/zero > zerofile
 
 Check and see how fast you can fill up your disk..
 
-!SUB
+!SLIDE
 # Mitigations
 
 * Create multiple virtual filesystems (files) and mount to apply disk quota (RHEL 6)
@@ -102,10 +102,10 @@ Check and see how fast you can fill up your disk..
   * Portability
 
 !SLIDE
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 # Packer: Add LVM to AMI
 
-!SUB
+!SLIDE
 # Use the `amazon-chroot` provider
 
 1. Creates volume from AMI snapshot
@@ -117,13 +117,13 @@ Check and see how fast you can fill up your disk..
   * Each provisioner is wrapped by a `chroot` command
 5. Unmounts all `chroot_mounts` and detaches volume
 
-!SUB
+!SLIDE
 ## Challenge
 
 Packer needs to unmount what it had mounted originally
 <!-- 2. No way to access {{ .Device }} in provisioner (/dev/xvda1) -->
 
-!SUB
+!SLIDE
 # Solution
 
 * Use _shell-local_ provisioner to execute a script on host: _lvm.sh_
@@ -136,12 +136,12 @@ Packer needs to unmount what it had mounted originally
   5. Mount new filesystems
   6. Restore
 
-!SUB
+!SLIDE
 # Tricking Packer..
 <center><div style="width: 75%; height: auto;"><img src="img/flow.svg"/></div></center>
 
 !SLIDE
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 # Conclusion
 
 Now able to apply filesystems/paritions changes automatically without any reboots.
@@ -156,7 +156,7 @@ Now able to apply filesystems/paritions changes automatically without any reboot
   * LVM only needs to be added __once__ per source image
 
 !SLIDE
-<!-- .slide: data-background="#6C1D5F" -->
+<!-- .slide: data-background="#6B205E" -->
 <center>![HashiConf](img/hashiconf.png)
 Come by the Xebia stand for some Q/A
 <p>
