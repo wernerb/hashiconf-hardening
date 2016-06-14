@@ -198,14 +198,14 @@ CIS recommends to implement the **Logical Volume Manager** (LVM)
 !SLIDE
 # Packer's amazon-chroot builder
 
-Different from the regular provider as it does not require a **new machine**.
+Different from the regular provider as it does **not** require launching a machine.
 
-Mount a new volume based on source AMI **directly** on the packer host
+Mounts a new volume based on source AMI **directly** on the packer host
 
 !SLIDE
 # shell-local provisioner
 
-The gambit: use **shell-local** provisioner to execute a script on host as first provisioner:
+The gambit: use **shell-local** provisioner to apply lvm directly on the device
 
 We use _lvm.sh_ to apply filesystem changes.
 
@@ -251,10 +251,9 @@ And remount!
 !SLIDE
 # Transplant is a success!
 
-Packer then continues as normal
+Packer continues launching provisioners as normal
 
 Non **shell-local** provisioners use **chroot** and are not bothered.
-
 
 !SLIDE
 # Packer throws an error
@@ -270,8 +269,6 @@ Non **shell-local** provisioners use **chroot** and are not bothered.
 ==> amazon-chroot:
 ```
 
-
-
 !SLIDE
 
 Not only busy, there are **more** mounts and **active** LVM volumes!
@@ -279,7 +276,7 @@ Not only busy, there are **more** mounts and **active** LVM volumes!
 !SLIDE
 # Solution
 
-Unmount ourselves and mount fake folders for packer to unmount .
+Unmount ourselves and **mount** fake folders for packer to then **unmount**..
 
 ```
 "provisioners": [
@@ -294,13 +291,13 @@ Unmount ourselves and mount fake folders for packer to unmount .
   }
 ```
 
-Success..
+Success!
 
 !SLIDE
 <center><div style="width: 75%; height: auto;"><img src="img/flow.svg"/></div></center>
 
 !SLIDE
-# So you think we were done?
+# So.. we are not done yet
 
 There is **no compliance** unless it can be **audited**.
 
@@ -309,16 +306,21 @@ There is **no compliance** unless it can be **audited**.
 
 Automatically audit CIS/STIG/OVAL profiles with **openscap** and the **oscap** tool.
 
-Example scanning for vulnerabilities
+Example scanning for vulnerabilities:
 ```
 $ wget https://www.redhat.com/security/data/oval/Red_Hat_Enterprise_Linux_6.xml
 $ oscap oval eval --results rhsa-results-oval.xml --report oval-report.html Red_Hat_Enterprise_Linux_6.xml
 ```
 
+Example checking for cis compliance:
+```
+$ oscap xccdf eval –profile selected_profile –results-arf arf.xml –report report.html ssg-rhel6-ds.xml
+```
+
 !SLIDE
 # Conclusion
 
-Even hashicorp says use **amazon-chroot** lightly. Just use it for LVM
+Even hashicorp says "use **amazon-chroot** lightly". Just use it for LVM.
 
 Use **amazon-ebs** and create an AMI hierarchy.
 
@@ -332,7 +334,7 @@ Come by the Xebia stand for some Q/A
 </center>
 
 !SLIDE
-# Mitigations
+# Additional Mitigations for Resource Exhaustion
 
 * Create multiple virtual filesystems (files) and mount to apply disk quota (RHEL 6)
 * If using XFS, use `xfs_quota` to set quota's per project (folder) (XFS is RHEL 7 default root)
