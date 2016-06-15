@@ -122,7 +122,7 @@ Costs **$0.02** an hour.
 !SLIDE
 But more importantly.. are you in control?
 
-! NOTE
+!NOTE
 Maintenance
 
 !SLIDE
