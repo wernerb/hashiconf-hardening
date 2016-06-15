@@ -318,12 +318,14 @@ Automatically audit CIS/STIG profiles OVAL/XCCDF definition using **openscap** a
 Example scanning for vulnerabilities:
 ```
 $ wget https://www.redhat.com/security/data/oval/Red_Hat_Enterprise_Linux_6.xml
-$ oscap oval eval --results rhsa-results-oval.xml --report oval-report.html Red_Hat_Enterprise_Linux_6.xml
+$ oscap oval eval --results rhsa-results-oval.xml \
+  --report oval-report.html Red_Hat_Enterprise_Linux_6.xml
 ```
 
 Example checking for cis compliance:
 ```
-$ oscap xccdf eval –profile selected_profile –results-arf arf.xml –report report.html ssg-rhel6-ds.xml
+$ oscap xccdf eval --profile selected_profile --results-arf arf.xml \
+  --report report.html ssg-rhel6-ds.xml
 ```
 
 
