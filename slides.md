@@ -31,9 +31,9 @@ CoreOS has the right idea here, now we have to worry about 10000+ outdated image
 
 We are not all on PaaS yet.
 
-Not just for your HIPAA / PCI-DSS / SOX / FISMA
+Enterprise has requirements to meet for HIPAA / PCI-DSS / SOX / FISMA
 
-Standard Linux distributions are **not** built for security **by default**.
+Standard Linux distributions are not made for the **best** security **by default**.
 
 Made to cater the **largest** customer base.
 
@@ -213,7 +213,7 @@ In my experience..
 !SLIDE
 # shell-local provisioner
 
-Idea: use **shell-local** provisioner to apply lvm directly on the block storage device.
+Idea: use **shell-local** provisioner to apply lvm directly on the device.
 
 We use _lvm.sh_ to handle everything for us.
 
@@ -243,7 +243,7 @@ tar -cf "${BACKUP_FILE}" --acls --selinux --xattrs --exclude='./proc/*' --exclud
 Create logical volumes/filesystems
 
 ```
-lvcreate -L5G -n lvroot "${vgname}" && /sbin/mkfs.ext4 -m0 -O ^64bit "/dev/${vgname}/lvroot" &>/dev/null
+lvcreate -L5G -n lvroot "${vgname}" && /sbin/mkfs.ext4 -m0 -O ^64bit "/dev/${vgname}/lvroot"
 ...
 ```
 
@@ -357,10 +357,12 @@ Any chance it would be accepted Mitchell?
 <!-- .slide: data-background="#6B205E" -->
 <center>![HashiConf](img/hashiconf.png)
 Come by the Xebia stand for some Q/A
+<br>
+<br>
 
 You can contact me at wbuck@xebia.com
-
-If you've missed it, sign up for the hashicontest.io at the Xebia stand!
+<br><br>
+Limited spots available for the hashicontest.io!
 </center>
 
 !SLIDE
