@@ -235,7 +235,9 @@ We use _lvm.sh_ to handle everything for us.
 Unmount and Backup the device:
 
 ```
-tar -cf "${BACKUP_FILE}" --acls --selinux --xattrs --exclude='./proc/*' --exclude='./sys/*' --exclude='./dev/*' --exclude='./var/run/portreserve/socket' --exclude='./var/run/acpid.socket' --exclude='./var/run/dbus/system_bus_socket' .
+tar -cf "${BACKUP_FILE}" --acls --selinux --xattrs --exclude='./proc/*' \
+ --exclude='./sys/*' --exclude='./dev/*' --exclude='./var/run/portreserve/socket' \
+ --exclude='./var/run/acpid.socket' --exclude='./var/run/dbus/system_bus_socket' .
 ```
 
 !SLIDE
